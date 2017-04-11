@@ -4,6 +4,8 @@ project1.py
 
 Code solves project 1 for E19, numerical methods.
 By Evan Greene
+
+The purpose of this project is to estimate pi by various numerical methods. 
 """
 
 import numpy
@@ -18,7 +20,7 @@ def mcpi(n):
     This proportion is equal to pi/4
     """
 
-    # generate a list of n pairs of floats
+    # generate n pairs of floats, then count the number that are inside the unit circle
     incircle = 0
     for i in range(n):
         point = numpy.random.random(2)
@@ -31,6 +33,8 @@ def mcpi(n):
     return pi_est
 
 def task1():
+    """ Estimates the number of guesses required to get an estimate of pi accurate to 10 decimal places"""
+    
     places = 4
     pi = numpy.around(numpy.pi, decimals = places)
     print 'pi = {}'.format(pi)
@@ -52,12 +56,15 @@ def task1():
             n = n*2
 
 def intpi(n):
-    """ Calculates pi by numerical integration """
+    """ Calculates pi by numerical integration. 
+    Evaluates the integral from 0 to 1 of (1-x^2) dx, 
+    using a simple left Riemann sum, (rectangular integration)
+    """
     pi = 0
 
-    delta_x = 1.0/n
+    delta_x = 1.0/n # step size
     for i in range(n):
-        x = delta_x * i
+        x = delta_x * i 
         pi += delta_x * numpy.sqrt(1 - x**2)
 
     pi *= 4
@@ -65,6 +72,8 @@ def intpi(n):
     return pi
 
 def task2():
+    """ plots the error with respect to the number of steps for the numerical integration
+    used in the intpi() function. """
     last_est = 0
     error_list = []
     step_size_list = []
@@ -87,19 +96,23 @@ def task2():
 
 
 def tspi1(n):
-    """ calculates pi using a taylor series """
+    """ calculates pi as pi = 4 * arctan(1) using a taylor series approximation. 
+    The approximation is arctan(x) ~ x - x^3/3 + x^5 / 5 - x^7 / 7 ... """
     pi = 0.0
     for i in range(1, 2*n + 1, 2):
         if (i / 2) % 2 == 0:
             pi += 1.0 / i
         else:
             pi -= 1.0 / i
-
-
+            
     pi *= 4
     return pi
 
 def tspi2(n):
+    """ calculates pi as 16 * arctan(1/5) - 4 arctan(1/239) using a taylor series approximation. 
+    The approximation is arctan(x) ~ x - x^3/3 + x^5 / 5 - x^7 / 7 ...
+    This is the same approximation used in tspi1() """ 
+    
     pi = 0.0
     for i in range(1, 2*n + 1, 2):
         if i / 2 % 2 == 0:
@@ -144,38 +157,12 @@ def task3():
         print '\nn = {}, pi = {}'.format(n, pi_est)
         print 'Approximate relative error-- {} %'.format(rel_error * 100)
         print 'True relative error-- {}%'.format(error * 100)
-        # code to output the numbers in a way that they can be copied and pasted
-        # into LaTeX
-        """
-        pi_est = numpy.around(pi_est, 6)
-        # round to 4 significant digits
-        places = 4- int(numpy.floor(math.log10(error)))
-        error = numpy.around(error, places)
-        places = 4 - int(numpy.floor(math.log10(error)))
-        print numpy.round(rel_error, places)
-        print '{} & {} & {} & {} \\\ '.format(n, pi_est,error *100,rel_error)
-        last_est = pi_est
-        """
-"""
-def experiment():
-    timer = time.time()
-    a = 0
-    for i in range(10):
-        a += mcpi(1000)
-    a = a / 10
-    print a
-    print time.time() - timer
-    timer = time.time()
-    b = mcpi(10000)
-    print b
-    print time.time() - timer
-"""
+
 
 def main():
     print task1()``
     task2()
     task3()
-    # experiment()
 
 if __name__ == '__main__':
     main()
