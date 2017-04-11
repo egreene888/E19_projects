@@ -1,5 +1,6 @@
 import numpy as np
 
+""" Solves linear systems of the form Ax = b using Gaussian elimination """ 
 
 ######################################################################
 # Perform forward elimination step of Gaussian elimination
